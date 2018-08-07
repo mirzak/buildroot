@@ -6,6 +6,8 @@
 
 MENDER_VERSION = 1.4.0
 MENDER_SITE = $(call github,mendersoftware,mender,$(MENDER_VERSION))
+MENDER_LICENSE = Apache-2.0 & BSD-2-Clause & BSD-3-Clause & MIT & OLDAP-2.8
+MENDER_LICENSE_FILES = LICENSE LIC_FILES_CHKSUM.sha256
 
 define MENDER_INSTALL_CONFIG_FILES
 	$(INSTALL) -D -m 0644 package/mender/mender.conf \
