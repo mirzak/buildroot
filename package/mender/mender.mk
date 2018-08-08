@@ -10,18 +10,24 @@ MENDER_LICENSE = Apache-2.0 & BSD-2-Clause & BSD-3-Clause & MIT & OLDAP-2.8
 MENDER_LICENSE_FILES = LICENSE LIC_FILES_CHKSUM.sha256
 
 define MENDER_INSTALL_CONFIG_FILES
+	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/mender
+	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/uboot
+	$(INSTALL) -d -m 755 $(TARGET_DIR)/uboot
+	$(INSTALL) -d -m 755 $(TARGET_DIR)/usr/share/mender/inventory
+
+	$(INSTALL) -d -m 755 $(TARGET_DIR)/etc/mender/scripts
+	echo -n "2" > $(TARGET_DIR)/etc/mender/scripts/version
+
 	$(INSTALL) -D -m 0644 package/mender/mender.conf \
 		$(TARGET_DIR)/etc/mender/mender.conf
-	$(INSTALL) -D -m 0644 package/mender/tenant.conf \
-		$(TARGET_DIR)/etc/mender/tenant.conf
 	$(INSTALL) -D -m 0644 package/mender/server.crt \
 		$(TARGET_DIR)/etc/mender/server.crt
-	$(INSTALL) -D -m 0755 package/mender/mender-device-identity \
-		$(TARGET_DIR)/var/share/mender/identity/mender-device-identity
-	$(INSTALL) -D -m 0755 package/mender/mender-inventory-network \
-		$(TARGET_DIR)/var/share/mender/inventory/mender-inventory-network
-	$(INSTALL) -D -m 0755 package/mender/mender-inventory-hostinfo \
-		$(TARGET_DIR)/var/share/mender/inventory/mender-inventory-hostinfo
+	$(INSTALL) -D -m 0755 $(@D)/support/mender-device-identity \
+		$(TARGET_DIR)/usr/share/mender/identity/mender-device-identity
+	$(INSTALL) -D -m 0755 $(@D)/support/mender-inventory-* \
+		$(TARGET_DIR)/usr/share/mender/inventory
+
+	ln -sf /data/mender $(TARGET_DIR)/var/lib/mender
 endef
 
 MENDER_POST_INSTALL_TARGET_HOOKS += MENDER_INSTALL_CONFIG_FILES
