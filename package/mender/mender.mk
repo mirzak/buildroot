@@ -34,6 +34,10 @@ MENDER_LICENSE_FILES = \
 
 MENDER_LDFLAGS = -X main.Version=$(MENDER_VERSION)
 
+ifeq ($(call qstrip,$(BR2_PACKAGE_MENDER_ARTIFACT_NAME)),)
+$(error Mender device type not set. Check your BR2_PACKAGE_MENDER_ARTIFACT_NAME setting)
+endif
+
 define MENDER_INSTALL_CONFIG_FILES
 	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/mender
 	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/uboot
@@ -55,6 +59,9 @@ define MENDER_INSTALL_CONFIG_FILES
 	)
 
 	ln -sf /data/mender $(TARGET_DIR)/var/lib/mender
+
+	echo "artifact_name=$(call qstrip,$(BR2_PACKAGE_MENDER_ARTIFACT_NAME))" > \
+		$(TARGET_DIR)/etc/mender/artifact_info
 endef
 
 MENDER_POST_INSTALL_TARGET_HOOKS += MENDER_INSTALL_CONFIG_FILES
