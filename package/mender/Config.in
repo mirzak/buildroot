@@ -13,6 +13,19 @@ config BR2_PACKAGE_MENDER
 
 	  https://github.com/mendersoftware/mender
 
+if BR2_PACKAGE_MENDER
+
+config BR2_PACKAGE_MENDER_ARTIFACT_NAME
+	string "Mender artifact name"
+	help
+	  The name of the image or update that will be built. This is what the
+	  device will report that it is running, and different updates must have
+	  different names.
+
+	  Will be stored in /etc/mender/artifact_info
+
+endif
+
 comment "mender needs a toolchain w/ threads"
 	depends on BR2_PACKAGE_HOST_GO_ARCH_SUPPORTS
 	depends on BR2_PACKAGE_HOST_GO_CGO_LINKING_SUPPORTS
