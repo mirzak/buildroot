@@ -13,6 +13,10 @@ ifeq ($(call qstrip,$(BR2_PACKAGE_MENDER_ARTIFACT_NAME)),)
 $(error Mender device type not set. Check your BR2_PACKAGE_MENDER_ARTIFACT_NAME setting)
 endif
 
+ifeq ($(call qstrip,$(BR2_PACKAGE_MENDER_DEVICE_TYPE)),)
+$(error Mender device type not set. Check your BR2_PACKAGE_MENDER_DEVICE_TYPE setting)
+endif
+
 define MENDER_INSTALL_CONFIG_FILES
 	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/mender
 	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/uboot
@@ -35,6 +39,9 @@ define MENDER_INSTALL_CONFIG_FILES
 
 	echo "artifact_name=$(call qstrip,$(BR2_PACKAGE_MENDER_ARTIFACT_NAME))" > \
 		$(TARGET_DIR)/etc/mender/artifact_info
+
+	echo "device_type=$(call qstrip,$(BR2_PACKAGE_MENDER_DEVICE_TYPE))" > \
+		$(TARGET_DIR)/data/mender/device_type
 endef
 
 MENDER_POST_INSTALL_TARGET_HOOKS += MENDER_INSTALL_CONFIG_FILES
