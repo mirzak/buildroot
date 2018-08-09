@@ -5,6 +5,7 @@ config BR2_PACKAGE_MENDER
 	depends on BR2_TOOLCHAIN_HAS_THREADS
 	depends on BR2_PACKAGE_UBOOT_TOOLS
 	depends on BR2_PACKAGE_UBOOT_TOOLS_FWPRINTENV
+	select BR2_PACKAGE_CA_CERTIFICATES
 	help
 	  Mender is an open source over-the-air (OTA) software updater
 	  for embedded Linux devices. Mender comprises a client
