@@ -17,6 +17,8 @@ ifeq ($(call qstrip,$(BR2_PACKAGE_MENDER_DEVICE_TYPE)),)
 $(error Mender device type not set. Check your BR2_PACKAGE_MENDER_DEVICE_TYPE setting)
 endif
 
+MENDER_LDFLAGS = -X main.Version=$(MENDER_VERSION)
+
 define MENDER_INSTALL_CONFIG_FILES
 	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/mender
 	$(INSTALL) -d -m 755 $(TARGET_DIR)/data/uboot
