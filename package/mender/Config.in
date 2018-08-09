@@ -25,6 +25,17 @@ config BR2_PACKAGE_MENDER_ARTIFACT_NAME
 
 	  Will be stored in /etc/mender/artifact_info
 
+config BR2_PACKAGE_MENDER_DEVICE_TYPE
+	string "Mender device type"
+	help
+	  A string that defines the type of device which will be used
+	  to check compatibility of update artifacts. Once a device is
+	  flashed with this, it will not change, even if the device is
+	  updated using Mender.
+
+	  Will be stored in /data/mender/device_type. Note that /data
+	  is a mount point for the persistent data partition.
+
 endif
 
 comment "mender needs a toolchain w/ threads"
