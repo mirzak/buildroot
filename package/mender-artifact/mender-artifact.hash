@@ -1,0 +1,29 @@
+# Locally computed:
+sha256 2a0322d8707c8ea7cada12c8f96144382264c898cadc35e8058bb9ea6bf8b041 mender-artifact-2.2.0.tar.gz
+
+# License, locally computed
+
+
+# Vendor licenses
+# Generated with sed '/^[A-Za-z0-9_]/s/^/sha256  /' LIC_FILES_CHKSUM.sha256
+
+# Apache-2.0 license.
+sha256 b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1 LICENSE
+sha256 ceb1b36ff073bd13d9806d4615b931707768ca9023805620acc32dd1cfc2f680 vendor/github.com/mendersoftware/mendertesting/LICENSE
+
+# BSD 2 Clause licenses.
+sha256 8d427fd87bc9579ea368fde3d49f9ca22eac857f91a9dec7e3004bdfab7dee86 vendor/github.com/pkg/errors/LICENSE
+
+# BSD 3 Clause licenses.
+sha256 2eb550be6801c1ea434feba53bf6d12e7c71c90253e0a9de4a4f46cf88b56477 vendor/github.com/pmezard/go-difflib/LICENSE
+
+# ISC licenses.
+sha256 3525392c6db3b804af76980b2c560ee9ec1abdadd907d76a26091df7c78f3a25 vendor/github.com/davecgh/go-spew/LICENSE
+
+# MIT licenses.
+sha256 402f39eed8a1851385d0703999aa9f23d067c2ea3e15c63c074e389cbf8f8f8f vendor/github.com/stretchr/testify/LICENSE
+sha256 402f39eed8a1851385d0703999aa9f23d067c2ea3e15c63c074e389cbf8f8f8f vendor/github.com/stretchr/testify/LICENCE.txt
+sha256 da277af11b85227490377fbcac6afccc68be560c4fff36ac05ca62de55345fd7 vendor/github.com/urfave/cli/LICENSE
+
+# sha256 of all the vendor licenses combined
+sha256 a9d3dea05c34f2bf7eb3fa677dafe09e9a80edd024cb31da750616c10f2bbcbb LIC_FILES_CHKSUM.sha256
