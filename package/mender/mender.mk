@@ -28,6 +28,8 @@ define MENDER_INSTALL_CONFIG_FILES
 		$(TARGET_DIR)/usr/share/mender/inventory/mender-inventory-network
 	$(INSTALL) -D -m 0755 package/mender/mender-inventory-hostinfo \
 		$(TARGET_DIR)/usr/share/mender/inventory/mender-inventory-hostinfo
+
+	ln -sf /data/mender $(TARGET_DIR)/var/lib/mender
 endef
 
 MENDER_POST_INSTALL_TARGET_HOOKS += MENDER_INSTALL_CONFIG_FILES
