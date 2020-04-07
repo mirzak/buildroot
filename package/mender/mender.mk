@@ -45,7 +45,7 @@ define MENDER_INSTALL_CONFIG_FILES
 
 	$(INSTALL) -D -m 0644 $(MENDER_PKGDIR)/mender.conf \
 		$(TARGET_DIR)/etc/mender/mender.conf
-	$(INSTALL) -D -m 0644 $(MENDER_PKGDIR)/server.crt \
+	$(INSTALL) -D -m 0644 $(@D)/support/demo.crt \
 		$(TARGET_DIR)/etc/mender/server.crt
 
 	$(INSTALL) -D -m 0755 $(@D)/support/mender-device-identity \
