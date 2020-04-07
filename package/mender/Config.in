@@ -14,6 +14,19 @@ config BR2_PACKAGE_MENDER
 
 	  https://github.com/mendersoftware/mender
 
+if BR2_PACKAGE_MENDER
+
+config BR2_PACKAGE_MENDER_UPDATE_MODULES
+	bool "Install reference Update Modules"
+	select BR2_PACKAGE_BASH
+	help
+	  Update Modules are small extensions to the Mender client
+	  which allows definition of custom install/update types.
+
+	  Enabling this option will install a selection of reference
+	  modules that are part of the Mender client source tree.
+endif
+
 comment "mender needs a toolchain w/ threads"
 	depends on BR2_PACKAGE_HOST_GO_TARGET_ARCH_SUPPORTS
 	depends on BR2_PACKAGE_HOST_GO_TARGET_CGO_LINKING_SUPPORTS

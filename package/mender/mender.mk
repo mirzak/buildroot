@@ -55,6 +55,13 @@ define MENDER_INSTALL_CONFIG_FILES
 			$(TARGET_DIR)/usr/share/mender/inventory/mender-inventory-$(f)
 	)
 
+ifeq ($(BR2_PACKAGE_MENDER_UPDATE_MODULES),y)
+	$(foreach f,script file directory, \
+		$(INSTALL) -D -m 0755 $(@D)/support/modules/$(f) \
+			$(TARGET_DIR)/usr/share/mender/modules/v3/$(f)
+	)
+endif
+
 	$(INSTALL) -D -m 0755 package/mender/artifact_info \
 			$(TARGET_DIR)/etc/mender/artifact_info
 
