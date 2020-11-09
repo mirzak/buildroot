@@ -1,0 +1,62 @@
+From f83fa2e10032656f67d11a0149b9ad4fee63e942 Mon Sep 17 00:00:00 2001
+From: Mirza Krak <mirza.krak@northern.tech>
+Date: Mon, 2 Nov 2020 09:06:26 +0100
+Subject: [PATCH 1/1] ppc64: add support for external linking
+
+Signed-off-by: Mirza Krak <mirza.krak@northern.tech>
+---
+ src/cmd/link/internal/ld/config.go | 2 --
+ src/runtime/asm_ppc64x.s           | 4 ++--
+ src/runtime/rt0_linux_ppc64.s      | 1 +
+ 3 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/src/cmd/link/internal/ld/config.go b/src/cmd/link/internal/ld/config.go
+index 2373b500e3..3f1b1095b9 100644
+--- a/src/cmd/link/internal/ld/config.go
++++ b/src/cmd/link/internal/ld/config.go
+@@ -265,8 +265,6 @@ func determineLinkMode(ctxt *Link) {
+ 		switch {
+ 		case objabi.GOARCH == "riscv64":
+ 			Exitf("external linking not supported for %s/riscv64", objabi.GOOS)
+-		case objabi.GOARCH == "ppc64" && objabi.GOOS != "aix":
+-			Exitf("external linking not supported for %s/ppc64", objabi.GOOS)
+ 		}
+ 	}
+ }
+diff --git a/src/runtime/asm_ppc64x.s b/src/runtime/asm_ppc64x.s
+index 23387a2165..2586c44b94 100644
+--- a/src/runtime/asm_ppc64x.s
++++ b/src/runtime/asm_ppc64x.s
+@@ -10,7 +10,7 @@
+ #include "textflag.h"
+ #include "asm_ppc64x.h"
+ 
+-#ifdef GOOS_aix
++#ifdef GOARCH_ppc64
+ #define cgoCalleeStackSize 48
+ #else
+ #define cgoCalleeStackSize 32
+@@ -562,7 +562,7 @@ TEXT gosave<>(SB),NOSPLIT|NOFRAME,$0
+ 	BL	runtime·badctxt(SB)
+ 	RET
+ 
+-#ifdef GOOS_aix
++#ifdef GOARCH_ppc64
+ #define asmcgocallSaveOffset cgoCalleeStackSize + 8
+ #else
+ #define asmcgocallSaveOffset cgoCalleeStackSize
+diff --git a/src/runtime/rt0_linux_ppc64.s b/src/runtime/rt0_linux_ppc64.s
+index 1265b15853..fc1f172aa7 100644
+--- a/src/runtime/rt0_linux_ppc64.s
++++ b/src/runtime/rt0_linux_ppc64.s
+@@ -18,6 +18,7 @@ TEXT _main<>(SB),NOSPLIT,$-8
+ 	// There is no TLS base pointer.
+ 	//
+ 	// TODO(austin): Support ABI v1 dynamic linking entry point
++	XOR	R0, R0 // following functions assume R0 is zero
+ 	MOVD	$runtime·rt0_go(SB), R12
+ 	MOVD	R12, CTR
+ 	MOVBZ	runtime·iscgo(SB), R5
+-- 
+2.28.0
+
