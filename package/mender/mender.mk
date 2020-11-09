@@ -37,6 +37,13 @@ MENDER_DEPENDENCIES = xz
 
 MENDER_LDFLAGS = -X main.Version=$(MENDER_VERSION)
 
+HOST_GO_TARGET_ENV += \
+	GCCGO="$(HOST_DIR)/bin/powerpc64-linux-gccgo"
+
+MENDER_BUILD_OPTS += \
+	-compiler gccgo \
+	-gccgoflags "-lpthread"
+
 MENDER_UPDATE_MODULES_FILES = \
 	directory \
 	script \
