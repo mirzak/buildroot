@@ -118,6 +118,13 @@ config BR2_TOOLCHAIN_BUILDROOT_DLANG
 	  D language and you want D libraries to be installed on your
 	  target system.
 
+config BR2_TOOLCHAIN_BUILDROOT_GO
+	bool "Enable Go support"
+	select BR2_TOOLCHAIN_HAS_GO
+	help
+	  Enable this option if you want your toolchain to support
+	  the gccgo compiler as a frontend for GCC
+
 config BR2_GCC_ENABLE_LTO
 	bool "Enable compiler link-time-optimization support"
 	select BR2_BINUTILS_ENABLE_LTO
