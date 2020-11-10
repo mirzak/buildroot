@@ -48,7 +48,7 @@ define HOST_GCC_APPLY_PATCHES
 endef
 
 HOST_GCC_EXCLUDES = \
-	libjava/*
+	libjava/* libgo/*
 
 #
 # Create 'build' directory and configure symlink
