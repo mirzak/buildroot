@@ -1,0 +1,55 @@
+Index: host-gcc-final-9.3.0/gcc/go/gccgo.texi
+===================================================================
+--- host-gcc-final-9.3.0.orig/gcc/go/gccgo.texi
++++ host-gcc-final-9.3.0/gcc/go/gccgo.texi
+@@ -246,6 +246,11 @@ This runs escape analysis only on functi
+ that match the given suffix @var{n}.  This can be used to binary
+ search across functions to uncover escape analysis bugs.
+ 
++@item -fgo-debug-optimization
++@cindex @option{-fgo-debug-optimization}
++@cindex @option{-fno-go-debug-optimization}
++Output optimization diagnostics.
++
+ @item -fgo-c-header=@var{file}
+ @cindex @option{-fgo-c-header}
+ Write top-level named Go struct definitions to @var{file} as C code.
+Index: host-gcc-final-9.3.0/gcc/go/go-c.h
+===================================================================
+--- host-gcc-final-9.3.0.orig/gcc/go/go-c.h
++++ host-gcc-final-9.3.0/gcc/go/go-c.h
+@@ -49,6 +49,7 @@ struct go_create_gogo_args
+   int debug_escape_level;
+   const char* debug_escape_hash;
+   int64_t nil_check_size_threshold;
++  bool debug_optimization;
+ };
+ 
+ extern void go_create_gogo (const struct go_create_gogo_args*);
+Index: host-gcc-final-9.3.0/gcc/go/go-lang.c
+===================================================================
+--- host-gcc-final-9.3.0.orig/gcc/go/go-lang.c
++++ host-gcc-final-9.3.0/gcc/go/go-lang.c
+@@ -118,6 +118,7 @@ go_langhook_init (void)
+   args.debug_escape_level = go_debug_escape_level;
+   args.debug_escape_hash = go_debug_escape_hash;
+   args.nil_check_size_threshold = TARGET_AIX ? -1 : 4096;
++  args.debug_optimization = go_debug_optimization;
+   args.linemap = go_get_linemap();
+   args.backend = go_get_backend();
+   go_create_gogo (&args);
+Index: host-gcc-final-9.3.0/gcc/go/lang.opt
+===================================================================
+--- host-gcc-final-9.3.0.orig/gcc/go/lang.opt
++++ host-gcc-final-9.3.0/gcc/go/lang.opt
+@@ -85,6 +85,10 @@ fgo-debug-escape-hash=
+ Go Joined RejectNegative Var(go_debug_escape_hash) Init(0)
+ -fgo-debug-escape-hash=<string>	Hash value to debug escape analysis.
+ 
++fgo-debug-optimization
++Go Var(go_debug_optimization) Init(0)
++Emit optimization diagnostics.
++
+ o
+ Go Joined Separate
+ ; Documented in common.opt
