@@ -119,11 +119,17 @@ function apply_patch {
         exit 1
     fi
     echo "${path}/${patch}" >> ${builddir}/.applied_patches_list
-    ${uncomp} "${path}/$patch" | patch -g0 -p1 -E --no-backup-if-mismatch -d "${builddir}" -t -N $silent
-    if [ $? != 0 ] ; then
-        echo "Patch failed!  Please fix ${patch}!"
-        exit 1
+    # We don't want this to abort the script on failure (script is run
+    # with set -e)
+    ${uncomp} "${path}/$patch" | patch -g0 -p1 -E -d "${builddir}" --dry-run -t -N -s && retval=0 || retval=$?
+    if [ $retval -eq 0 ] ; then
+      ${uncomp} "${path}/$patch" | patch -g0 -p1 -E -d "${builddir}" -t -N $silent
+      # Due to set -e, if we reach here, applying the patch was successful
+      return
     fi
+
+    [ -z "${silent}" ] && gitopts=-v
+    (cd ${builddir}; ${uncomp} "${path}/$patch" | git --git-dir=/dev/null apply -p1 ${gitopts})
 }
 
 function scan_patchdir {
